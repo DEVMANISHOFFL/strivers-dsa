@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func pattern1(n int) {
 	for range n {
@@ -276,7 +278,31 @@ func pattern20(n int) {
 	}
 }
 
+func pattern21(n int) {
+	for i := range n {
+		for j := range n {
+			if i == 0 || j == 0 || i == n-1 || j == n-1 {
+
+				fmt.Print("* ")
+			} else {
+				fmt.Print("  ")
+			}
+
+		}
+		fmt.Println()
+	}
+}
+
+func pattern22(n int) {
+	for i := range 2*n - 1 {
+		for j := range 2*n - 1 {
+			fmt.Print(i, j)
+		}
+		fmt.Println()
+	}
+}
+
 func main() {
-	pattern20(5)
+	pattern22(5)
 
 }
