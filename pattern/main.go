@@ -293,16 +293,7 @@ func pattern21(n int) {
 	}
 }
 
-func pattern22(n int) {
-	for i := range 2*n - 1 {
-		for j := range 2*n - 1 {
-			fmt.Print(i, j)
-		}
-		fmt.Println()
-	}
-}
-
 func main() {
-	pattern22(5)
+	pattern21(5)
 
 }
