@@ -244,21 +244,54 @@ func FindMissingElement(arr []int, till int) []int {
 	return notAvail
 }
 
+func FindMissingElementSum(arr []int) int {
+	n := len(arr)
+	var missing int
+	var sum int
+	actualSum := n * (n + 1) / 2
+	for i := 0; i < n; i++ {
+		sum = sum + arr[i]
+	}
+	missing = actualSum - sum
+	return missing
+}
+
+func CountConsecutive(arr []int) int {
+	var max int
+	var count int
+	for _, v := range arr {
+		if v == 1 {
+			count++
+			if count > max {
+				max = count
+			}
+		} else {
+			count = 0
+		}
+
+	}
+	return max
+}
+
+func OccuredOnce(arr []int) int {
+	sort.Ints(arr)
+	fmt.Println(arr)
+	var once int
+	for i := 1; i < len(arr); i++ {
+		if arr[i] != arr[i-1] {
+			once = arr[i]
+		}
+	}
+	return once
+}
+
 func main() {
 
-	arr := []int{1, 2, 3, 4, 6, 7, 8}
-	fmt.Println(FindMissingElement(arr, 10))
+	arr := []int{1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 6, 7}
+	// arr := []int{0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1}
+	// fmt.Println(FindMissingElementSum(arr))
+	fmt.Println(OccuredOnce(arr))
 
-	arrA := []int{
-		31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-		41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-	}
-
-	arrB := []int{
-		30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-		40, 40,
-	}
-
-	fmt.Println(Intersection(arrA, arrB))
+	// fmt.Println(Intersection(arrA, arrB))
 
 }
