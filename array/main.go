@@ -285,13 +285,40 @@ func OccuredOnce(arr []int) int {
 	return once
 }
 
+func maxSubarray(arr []int, k int) ([]int, int) {
+	n := len(arr)
+	res := []int{}
+	maxLen := 0
+	for i := range arr {
+		sum := 0
+		for j := i; j < n; j++ {
+			sum = sum + arr[j]
+			subLen := j - i + 1
+			if sum == k && subLen > maxLen {
+				maxLen = subLen
+				res = arr[i : j+1]
+			}
+		}
+	}
+	return res, len(res)
+}
+
+func prefixSum(arr []int) []int {
+	pSum := make([]int, len(arr)+1)
+	sum := 0
+	for i := 1; i <= len(arr); i++ {
+		sum = sum + arr[i]
+		pSum[i] = pSum[i-1] + arr[i-1]
+	}
+	return pSum
+
+}
+
 func main() {
 
-	arr := []int{1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 6, 7}
+	// arr := []int{1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 6, 7}
+	arr := []int{1, 2, 3, 4, 5}
 	// arr := []int{0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1}
-	// fmt.Println(FindMissingElementSum(arr))
-	fmt.Println(OccuredOnce(arr))
 
-	// fmt.Println(Intersection(arrA, arrB))
-
+	fmt.Println(prefixSum(arr))
 }
