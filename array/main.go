@@ -303,22 +303,23 @@ func maxSubarray(arr []int, k int) ([]int, int) {
 	return res, len(res)
 }
 
-func prefixSum(arr []int) []int {
+func prefixSum(arr []int, tar int) ([]int, int) {
 	pSum := make([]int, len(arr)+1)
-	sum := 0
+	subArray := []int{}
 	for i := 1; i <= len(arr); i++ {
-		sum = sum + arr[i]
 		pSum[i] = pSum[i-1] + arr[i-1]
+
 	}
-	return pSum
+	return subArray, len(subArray)
 
 }
 
 func main() {
 
 	// arr := []int{1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 6, 7}
-	arr := []int{1, 2, 3, 4, 5}
+	arr := []int{-1, 2, -2, -3, -3, 4, 5, 8, -5, 4, -9, 5, 4}
+	// arr := []int{1, 2, 3, 4, 5}
 	// arr := []int{0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1}
 
-	fmt.Println(prefixSum(arr))
+	fmt.Println(prefixSum(arr, 6))
 }
