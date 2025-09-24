@@ -151,31 +151,106 @@ func maxSubArraySum(arr []int) int {
 	return maxSum
 }
 
-func kadane(arr []int) ([]int, int) {
+func kadane(arr []int) int {
 	maxSoFar := arr[0]
 	curr := arr[0]
-	subArray := []int{}
 
 	for i := 1; i < len(arr); i++ {
 		sum := curr + arr[i]
 
 		curr = max(sum, arr[i])
 		if curr > maxSoFar {
-			subArray = append(subArray, arr[i])
 
 			maxSoFar = curr
 		}
 	}
-	return subArray, maxSoFar
+	return maxSoFar
+}
+
+func kadanes(arr []int) (int, []int) {
+	n := len(arr)
+	maxSoFar, curr := arr[0], arr[0]
+	subArray := []int{}
+
+	if n == 0 {
+		return 0, nil
+	}
+
+	for i := 1; i < n; i++ {
+		curr = max(arr[i], arr[i]+curr)
+		maxSoFar = max(curr, maxSoFar)
+	}
+	return maxSoFar, subArray
+
+}
+
+func maxS(arr []int) ([]int, int) {
+	n := len(arr)
+	if n == 0 {
+		return nil, 0
+	}
+
+	start, end, tempStart := 0, 0, 0
+	maxSoFar, curr := arr[0], arr[0]
+
+	for i := 1; i < n; i++ {
+		if curr+arr[i] < arr[i] {
+			curr = arr[i]
+			tempStart = i
+		} else {
+			curr += arr[i]
+
+		}
+		if curr > maxSoFar {
+			maxSoFar = curr
+			start = tempStart
+			end = i
+		}
+	}
+	sub := make([]int, end-start+1)
+	copy(sub, arr[start:end+1])
+	return sub, maxSoFar
+}
+
+func BuyAndSell(arr []int) int {
+	n := len(arr)
+	maxProfit := 0
+
+	for i := 0; i < n; i++ {
+		for j := i + 1; j < n; j++ {
+			profit := arr[j] - arr[i]
+			if maxProfit < profit {
+				maxProfit = profit
+			}
+		}
+	}
+	return maxProfit
+}
+
+func BuyAndSellOptimal(arr []int) int {
+	n := len(arr)
+
+	maxProfit := 0
+	minPrice := arr[0]
+
+	for i := 1; i < n; i++ {
+		cost := arr[i] - minPrice
+		maxProfit = max(maxProfit, cost)
+
+		minPrice = min(arr[i], minPrice)
+	}
+	return maxProfit
 }
 
 func main() {
 	// arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 34, 56, 78, 91, 23, 45, 67, 89, 12, 34, 56, 78, 90}
 	// arr := []int{0, 1, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1, 0, 1, 2}
-	// arr := []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
-	arr := []int{5, 4, -1, 7, 8}
+	// arr := []int{7, 1, 5, 3, 6, 4}
+	arr := []int{-2, 1, -3, 4, -1, 2, 1, 5, 4}
 
 	// fmt.Println(MajorityElement(arr))
-	fmt.Println(kadane(arr))
+	// fmt.Println(kadanes(arr))
+	// fmt.Println(kadane(arr))
+	fmt.Println(BuyAndSell(arr))
 
 }
