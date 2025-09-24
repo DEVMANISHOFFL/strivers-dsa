@@ -2,19 +2,24 @@ package main
 
 import "fmt"
 
-func recursion(n int) int {
-	if n == 0 {
-		return 0
-	}
+func prac(arr []int, tar int) [][]int {
+	seen := make(map[int]int)
+	pairs := [][]int{}
 
-	if n == 1 {
-		return 1
+	for i := 0; i < len(arr); i++ {
+		complement := tar - arr[i]
+		if count, ok := seen[complement]; ok {
+			for range count {
+				pairs = append(pairs, []int{complement, arr[i]})
+			}
+		}
+		seen[arr[i]]++
 	}
-	return recursion(n-1) + recursion(n-2)
-
+	return pairs
 }
-
 func main() {
-	// fmt.Println(recursion([]int{1, 2, 3, 4, 5, 6}))
-	fmt.Println(recursion(20))
+	arr := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	// arr := []int{1, 1, 2, 0, 4, 3, 4, 4, 4, 4, 5, 4, 4, 1, 4, 4, 4, 4, 4, 4}
+	fmt.Println(prac(arr, 5))
+
 }
