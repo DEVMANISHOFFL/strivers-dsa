@@ -242,15 +242,61 @@ func BuyAndSellOptimal(arr []int) int {
 	return maxProfit
 }
 
+func alternate(arr []int) []int {
+	n := len(arr)
+	positive := []int{}
+	negative := []int{}
+
+	for i := 0; i < n; i++ {
+		if arr[i] > 0 {
+			positive = append(positive, arr[i])
+		} else {
+			negative = append(negative, arr[i])
+		}
+	}
+
+	res := []int{}
+	posIdx, negIdx := 0, 0
+
+	for posIdx < len(positive) && negIdx < len(negative) {
+		res = append(res, positive[posIdx])
+		posIdx++
+		res = append(res, negative[negIdx])
+		negIdx++
+	}
+
+	return res
+}
+
+func test(arr []int) []int {
+	n := len(arr)
+	pos, neg := 0, 1
+	ans := make([]int, n)
+
+	for i := 0; i < n; i++ {
+		if arr[i] < 0 {
+			if pos < n {
+				ans[pos] = arr[i]
+				pos += 2
+			} else {
+				if neg < n {
+					ans[neg] = arr[i]
+					neg += 2
+				}
+			}
+		}
+	}
+	return ans
+}
+
 func main() {
 	// arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 34, 56, 78, 91, 23, 45, 67, 89, 12, 34, 56, 78, 90}
 	// arr := []int{0, 1, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1, 0, 1, 2}
 	// arr := []int{7, 1, 5, 3, 6, 4}
-	arr := []int{-2, 1, -3, 4, -1, 2, 1, 5, 4}
-
+	// arr := []int{-2, 1, -3, 4, -1, 2, 1, 5, 4}
+	arr := []int{3, 1, -2, -5, 2, -4, 1, 12, 4, 8}
 	// fmt.Println(MajorityElement(arr))
 	// fmt.Println(kadanes(arr))
 	// fmt.Println(kadane(arr))
-	fmt.Println(BuyAndSell(arr))
-
+	fmt.Println(alternate(arr))
 }
